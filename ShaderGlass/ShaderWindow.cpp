@@ -120,6 +120,7 @@ void ShaderWindow::LoadProfile(const std::string& fileName)
                     CheckMenuItem(m_outputScaleMenu, IDM_OUTPUT_FREESCALE, MF_CHECKED | MF_BYCOMMAND);
                     m_captureOptions.freeScale   = true;
                     m_captureOptions.outputScale = 1.0f;
+                    m_selectedOutputScale = 0;
                 }
                 else
                 {
@@ -809,7 +810,9 @@ void ShaderWindow::UpdateWindowState()
         }
 
         char title[200];
-        snprintf(title, 200, "ShaderGlass (%s%s, x%s, %s%%, ~%s)", windowName, shader->Name, pixelSize.mnemonic, outputScale.mnemonic, aspectRatio.mnemonic);
+        snprintf(title, 200, "ShaderGlass (%s%s, x%s, %s%%%s, ~%s)", windowName, shader->Name, pixelSize.mnemonic, outputScale.mnemonic,
+            (m_captureOptions.captureWindow || !m_captureOptions.imageFile.empty()) ? (m_captureOptions.freeScale ? " Free" : " Fixed") : "",
+            aspectRatio.mnemonic);
         SetWindowTextA(m_mainWindow, title);
     }
     else
@@ -965,6 +968,7 @@ LRESULT CALLBACK ShaderWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, L
                 CheckMenuItem(m_outputScaleMenu, IDM_OUTPUT_FREESCALE, MF_CHECKED | MF_BYCOMMAND);
                 m_captureOptions.freeScale   = true;
                 m_captureOptions.outputScale = 1.0f;
+                m_selectedOutputScale = 0;
             }
             m_captureManager.UpdateOutputSize();
             UpdateWindowState();
