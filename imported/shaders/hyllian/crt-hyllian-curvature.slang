@@ -57,11 +57,13 @@ layout(std140, set = 0, binding = 0) uniform UBO
 layout(location = 0) in vec4 Position;
 layout(location = 1) in vec2 TexCoord;
 layout(location = 0) out vec2 vTexCoord;
+layout(location = 1) out vec2 FragCoord;
 
 void main()
 {
     gl_Position = global.MVP * Position;
     vTexCoord   = TexCoord * 1.0001;
+	FragCoord = vec2(gl_Position.x, gl_Position.y);
 }
 
 #pragma stage fragment
